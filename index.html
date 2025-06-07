@@ -22,8 +22,19 @@
 
 <fieldset id="pattern-container">
   <legend>含める文字</legend>
-  <!-- チェックボックスがここに動的に追加されます -->
+  <!-- チェックボックスがここに追加される -->
 </fieldset>
+
+<h3>新しいパターンを追加</h3>
+<label>
+  パターン名：
+  <input type="text" id="pattern-name" placeholder="例: 記号" />
+</label>
+<label>
+  使用文字列：
+  <input type="text" id="pattern-chars" placeholder="例: !@#$%" />
+</label>
+<button id="add-pattern">パターンを追加</button>
 
 <button id="generate">生成</button>
 
