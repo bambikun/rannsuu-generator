@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>乱数ジェネレーター</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 1em; max-width: 400px; margin: auto; }
+  label { display: block; margin-top: 0.5em; }
+  input[type="number"] { width: 100%; padding: 0.3em; font-size: 1em; }
+  button { margin-top: 1em; padding: 0.6em 1.2em; font-size: 1em; }
+  pre { background: #eee; padding: 1em; white-space: pre-wrap; word-wrap: break-word; }
+</style>
+</head>
+<body>
+
+<h1>乱数ジェネレーター</h1>
+
+<label>
+  個数（生成する乱数の数）
+  <input type="number" id="count" min="1" max="1000" value="5" />
+</label>
+
+<label>
+  文字数（1つの乱数の長さ）
+  <input type="number" id="length" min="1" max="100" value="8" />
+</label>
+
+<fieldset>
+  <legend>含める文字</legend>
+  <label><input type="checkbox" id="uppercase" checked /> 大文字（A-Z）</label>
+  <label><input type="checkbox" id="lowercase" checked /> 小文字（a-z）</label>
+  <label><input type="checkbox" id="digits" checked /> 数字（0-9）</label>
+</fieldset>
+
+<button id="generate">生成</button>
+
+<h2>結果</h2>
+<pre id="result"></pre>
+
+<script>
+  function generateRandomString(length, charset) {
+    let result = '';
+    const n = charset.length;
+    for(let i = 0; i < length; i++) {
+      result += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return result;
+  }
+
+  document.getElementById('generate').addEventListener('click', () => {
+    const count = parseInt(document.getElementById('count').value, 10);
+    const length = parseInt(document.getElementById('length').value, 10);
+
+    const useUpper = document.getElementById('uppercase').checked;
+    const useLower = document.getElementById('lowercase').checked;
+    const useDigits = document.getElementById('digits').checked;
+
+    let charset = '';
+    if(useUpper) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if(useLower) charset += 'abcdefghijklmnopqrstuvwxyz';
+    if(useDigits) charset += '0123456789';
+
+    const resultArea = document.getElementById('result');
+    if(charset === '') {
+      resultArea.textContent = 'エラー: 文字種を少なくとも1つ選択してください。';
+      return;
+    }
+
+    if(isNaN(count) || count < 1 || count > 1000) {
+      resultArea.textContent = 'エラー: 個数は1〜1000の整数で指定してください。';
+      return;
+    }
+    if(isNaN(length) || length < 1 || length > 100) {
+      resultArea.textContent = 'エラー: 文字数は1〜100の整数で指定してください。';
+      return;
+    }
+
+    let output = '';
+    for(let i = 0; i < count; i++) {
+      output += generateRandomString(length, charset) + '\n';
+    }
+    resultArea.textContent = output.trim();
+  });
+</script>
+
+</body>
+</html>
