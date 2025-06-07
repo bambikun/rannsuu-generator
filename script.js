@@ -61,8 +61,23 @@ document.getElementById('generate').addEventListener('click', () => {
   resultArea.textContent = output.trim();
 });
 
-// === 使用する文字種の定義 ===
+document.getElementById('add-pattern').addEventListener('click', () => {
+  const nameInput = document.getElementById('pattern-name');
+  const charInput = document.getElementById('pattern-chars');
+  const name = nameInput.value.trim();
+  const chars = charInput.value;
+
+  if (!name || !chars) {
+    alert("パターン名と使用文字列の両方を入力してください。");
+    return;
+  }
+
+  setPattern(name, chars);
+  nameInput.value = '';
+  charInput.value = '';
+});
+
+// === デフォルトパターン ===
 setPattern("大文字（A-Z）", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 setPattern("小文字（a-z）", "abcdefghijklmnopqrstuvwxyz");
 setPattern("数字（0-9）", "0123456789");
-// 例：setPattern("記号", "!@#$%^&*()");
